@@ -42,17 +42,17 @@ include $_SERVER['DOCUMENT_ROOT']."/bbs/db.php"; ?>
             $catagory = $_GET['catgo'];
             $search_con = $_GET['search'];
         
-            if(isset($search_con) === TRUE ){ //search_con에 값이 없으면 전체출력(else문), 있으면 검색값 출력
+            if(isset($search_con) === TRUE ){ //search_con에 값이 없으면 전체출력(else문), 있으면 검색값 출력(if문)
                 //'검색할 때 오류안나게 addslashes사용
                 $catagory = addslashes($catagory);
                 $search_con = addslashes($search_con);
 
-                // 검색값이 있을때 페이징
-            if(isset($_GET['page'])){ //page 값이 있으면 $page변수에 GET으로 받온 page를, 아니면 page변수에 1을 넣는다.
-                $page = $_GET['page'];
-                }else{
-                    $page = 1;
-                }
+                    // 검색값이 있을때 페이징
+                if(isset($_GET['page'])){ //page 값이 있으면 $page변수에 GET으로 받온 page를, 아니면 page변수에 1을 넣는다.
+                    $page = $_GET['page'];
+                    }else{
+                        $page = 1;
+                    }
     
                 $sql = mq("select * from board where ".$catagory." like '%{$search_con}%'");
                 $row_num = mysqli_num_rows($sql); //게시판 총 레코드 수
@@ -67,11 +67,12 @@ include $_SERVER['DOCUMENT_ROOT']."/bbs/db.php"; ?>
                 if($block_end > $total_page) $block_end = $total_page; //만약 블록의 마지박 번호가 페이지수보다 많다면 마지박번호는 페이지 수
                 $total_block = ceil($total_page/$block_ct); //블럭 총 개수
                 $start_num = ($page-1) * $list; //시작번호 (page-1)에서 $list를 곱한다.
-
-                
+              
                  // board테이블에서 idx를 기준으로 내림차순 5개 표시
                 $sql2 = mq("select * from board where ".$catagory." like '%{$search_con}%' order by idx desc limit $start_num, $list");
                 // echo "select * from board where ".$catagory." like '%{$search_con}%' order by idx desc"; //-> SQL문 잘 실행되는지 확인
+
+                
                 while($board = $sql2 -> fetch_array()) //쿼리 결과를 배열로 행이 끝날때까지 반복실행
                 {
                     $title = $board["title"];
@@ -89,12 +90,28 @@ include $_SERVER['DOCUMENT_ROOT']."/bbs/db.php"; ?>
             </tr>
         </tbody>
         <?php }?>
+                </table>
 
+
+
+
+
+
+
+
+        
 
           <!-- 페이지 넘버 -->
         <div id ="page_num">
             <ul> 
                 <?php
+                if($page <= 1)
+                {
+                    //만약 page가 1보다 크거나 같다면 빈값
+                } else {
+                $pre = $page -1;
+                    echo "<li><a href='?catgo=title&search=$search_con&page=$pre'>이전</a></li>";
+                }
                 for ($i = $block_start; $i <= $block_end; $i++){
                     if($page == $i){//
                         echo "<li class='fo_re'>[$i]</li>";
@@ -102,9 +119,11 @@ include $_SERVER['DOCUMENT_ROOT']."/bbs/db.php"; ?>
                         echo "<li><a href='?catgo=title&search=$search_con&page=$i'>[$i]</a></li>";
                     }
                 }
-            
-            
-                
+                if($block_num >= $total_block){
+                }else{
+                    $next =$page + 1;
+                    echo "<li><a href='?catgo=title&search=$search_con&page=$next'>다음</a></li>";
+                }
         }else{
                  // 검색값이 없을때 페이징(전체 출력)
             if(isset($_GET['page'])){ //page 값이 있으면 $page변수에 GET으로 받온 page를, 아니면 page변수에 1을 넣는다.
@@ -155,12 +174,24 @@ include $_SERVER['DOCUMENT_ROOT']."/bbs/db.php"; ?>
         <div id ="page_num">
             <ul>
                 <?php
+                if($page <= 1)
+                {
+                    //만약 page가 1보다 크거나 같다면 빈값
+                } else {
+                $pre = $page -1;
+                    echo "<li><a href='?page=$pre'>이전</a></li>";
+                }
                 for ($i = $block_start; $i <= $block_end; $i++){
                     if($page == $i){
                         echo "<li class='fo_re'>[$i]</li>";
                     }else{
                         echo "<li><a href='?page=$i'>[$i]</a></li>";
                     }
+                }
+                if($block_num >= $total_block){
+                }else{
+                    $next =$page + 1;
+                    echo "<li><a href='?page=$next'>다음</a></li>";
                 }
             }
             

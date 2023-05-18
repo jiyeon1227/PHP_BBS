@@ -43,7 +43,7 @@
                                     title: '이미지삽입',
                                     icon: 'image',
                                     onclick: function () {
-                                        window.open("POPUP_URL","tinymcePop","width=400,height=350");
+                                        window.open("\bbs\file","_fileupload","width=400,height=350");
                                     }
                                 });
                             }
