@@ -25,39 +25,8 @@
                         <textarea name = "content" id ="ucontent" placeholder = "내용" require></textarea>
 
 
-
-
-                
-                        <script>
-                            tinymce.init({
-                            selector: "#ucontent",
-                            theme: "modern",
-                            language: "ko",
-                            menubar:false,
-                            plugins: "autolink autosave code link media image table textcolor autoresize",
-                            toolbar: "undo redo | styleselect | forecolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table link media custom_image code ",
-
-
-                            setup: function(editor) {
-                            editor.addButton('custom_image', {
-                                    title: '이미지삽입',
-                                    icon: 'image',
-                                    onclick: function () {
-                                        window.open("\bbs\file","_fileupload","width=400,height=350");
-                                    }
-                                });
-                            }
-                
-                        });
-                        </script>
-
-
-
-
-
-
-                        <!-- 이미지 업로드 할 때 base 64로 업로드 되는 방법...(파일이 커지면 사진 안뜸)
-                            <script>
+                        
+                    <script>
                         tinymce.init({
                             selector: '#ucontent',
                             // images_upload_url: 'postAcceptor.php',
@@ -99,7 +68,7 @@
                             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
                             
                         });
-                        </script> -->
+                    </script>
 
 
 
