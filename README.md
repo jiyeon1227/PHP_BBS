@@ -1,4 +1,7 @@
 # PHP_BBS
+게시판
+tinymce에디터
+룰렛&ajax
 <!-- 참고한것들....(안봐도 딱히 ;ㅋ)
 게시판 만들기 참고(~#5까지 함)
 https://blog.naver.com/bgpoilkj/220751401209
